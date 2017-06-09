@@ -1,4 +1,4 @@
-#How to Provide Replies about Shipping Costs via Api.ai Webhook
+#How to Provide Replies about Item Prices via Api.ai Webhook
 
 This example shows how you can use Api.ai webhook to provide different item prices depending on the world region.
 
