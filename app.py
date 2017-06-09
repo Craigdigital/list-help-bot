@@ -34,7 +34,7 @@ def makeWebhookResult(req):
     parameters = result.get("parameters")
     zone = parameters.get("item")
 
-    cost = {'jeans':25, 'shoes':100, 'iphone':500, 'bags':200}
+    cost = {'jeans':25, 'shoes':100, 'iphone':500, 'bags':250}
 
     speech = "The recommended cost of " + zone + " is " + str(cost[zone]) + " dollars."
 
