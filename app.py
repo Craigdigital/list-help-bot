@@ -34,7 +34,7 @@ def makeWebhookResult(req):
     parameters = result.get("parameters")
     zone = parameters.get("item")
 
-    cost = {'jeans':20, 'shoes':100, 'iphone':500, 'bags':200}
+    cost = {'jeans':25, 'shoes':100, 'iphone':500, 'bags':200}
 
     speech = "The recommended cost of " + zone + " is " + str(cost[zone]) + " dollars."
 
@@ -53,6 +53,6 @@ def makeWebhookResult(req):
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
 
-    print "Starting app on port %d" % port
+    print ("Starting app on port %d" % port)
 
     app.run(debug=True, port=port, host='0.0.0.0')
