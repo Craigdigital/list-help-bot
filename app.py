@@ -35,7 +35,7 @@ def makeWebhookResult(req):
     cost = {'jeans':25, 'shoes':100, 'iphone':500, 'bags':250}
 
     if req.get("result").get("action") == "item.cost":
-        speech = "The recommended cost of " + item + " is dollars."
+        speech = "The recommended cost of " + item + " is "  + str(cost[item]) + " dollars."
     elif req.get("result").get("action") == "item.create":
         speech = 'Sure, I can help you sell your ' + item + ' on eBay. According to similar sold items, ' \
                  'It will list with 7 day auction with starting price of $' + str(cost[item]) + '. Can I publish for you?'
@@ -60,3 +60,5 @@ if __name__ == '__main__':
     print ("Starting app on port %d" % port)
 
     app.run(debug=True, port=port, host='0.0.0.0')
+
+
