@@ -28,13 +28,13 @@ def webhook():
     r.headers['Content-Type'] = 'application/json'
     return r
 
-def creatDraft():
+def creatDraft(item):
     url = "http://1f0cb7bf.ngrok.io/experience/consumer_selling/v1/listing_draft/create_and_open?mode=AddItem"
 
     payload = {
         "requestListing": {
             "item": {
-                "title": "jeans"
+                "title": item
             },
             "categoryId": "11483",
             "condition": "1000"
@@ -62,7 +62,7 @@ def makeWebhookResult(req):
     result = req.get("result")
     parameters = result.get("parameters")
     item = parameters.get("item")
-    draftId = creatDraft()
+    draftId = creatDraft(item)
 
     cost = {'jeans':25, 'shoes':100, 'iphone':500, 'bags':250}
 
