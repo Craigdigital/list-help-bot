@@ -28,8 +28,11 @@ def webhook():
     r.headers['Content-Type'] = 'application/json'
     return r
 
-def creatDraft(item):
+def creatDraft(parameters):
     categories = {'jeans': "11483", 'camera': "31388"}
+
+    item = parameters.get("item")
+
 
     url = "http://1f0cb7bf.ngrok.io/experience/consumer_selling/v1/listing_draft/create_and_open?mode=AddItem"
 
@@ -55,8 +58,7 @@ def creatDraft(item):
     response = requests.post(url, json=payload, headers=headers)
     if response.status_code == 200:
         responseJS = json.loads(response.content)
-        draftId = responseJS["modules"]['SELL_NODE_CTA']['paramList']['draftId']
-        return draftId
+        return responseJS
     else:
         return response.status_code
 
@@ -65,16 +67,16 @@ def makeWebhookResult(req):
     parameters = result.get("parameters")
     item = parameters.get("item")
 
+    responseJS = creatDraft(parameters)
+    draftId = responseJS["modules"]['SELL_NODE_CTA']['paramList']['draftId']
+    startPrice = responseJS["modules"]['PRICE']['bestChanceToSell']['price']['value']
 
-    cost = {'jeans':25, 'shoes':100, 'iphone':500, 'bags':250}
-
-    draftId = creatDraft(item)
 
     if req.get("result").get("action") == "item.cost":
-        speech = "The recommended cost of " + item + " is "  + str(cost[item]) + " dollars."
+        speech = "The recommended cost of " + item + " is "  + startPrice + " dollars."
     elif req.get("result").get("action") == "item.create":
         speech = 'Sure, I can help you sell your ' + item + ' on eBay with draftId ' + str(draftId) + '. According to similar sold items, ' \
-                 'It will list with 7 day auction with starting price of $' + str(cost[item]) + '. Can I publish for you?'
+                 'It will list with 7 day auction with starting price of $' + startPrice + '. Can I publish for you?'
     else:
         return {}
 
