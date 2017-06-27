@@ -75,17 +75,20 @@ def makeWebhookResult(req):
     if req.get("result").get("action") == "item.cost":
         speech = "The recommended cost of " + item + " is "  + startPrice + " dollars."
     elif req.get("result").get("action") == "item.create":
-        speech = 'Sure, I can help you sell your ' + item + ' on eBay with draftId ' + str(draftId) + '. According to similar sold items, ' \
+        speech = 'Sure, I can help you sell your ' + item + ' on eBay with draftId as displayed. According to similar sold items, ' \
+                 'It will list with 7 day auction with starting price of $' + startPrice + '. Can I publish for you?'
+        text = 'Sure, I can help you sell your ' + item + ' on eBay with draftId ' + str(draftId) + '. According to similar sold items, ' \
                  'It will list with 7 day auction with starting price of $' + startPrice + '. Can I publish for you?'
     else:
         return {}
 
     print("Response:")
     print(speech)
+    print(text)
 
     return {
         "speech": speech,
-        "displayText": speech,
+        "displayText": text,
         #"data": {},
         # "contextOut": [],
         "source": "apiai-onlinestore-shipping"
