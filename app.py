@@ -28,9 +28,6 @@ def webhook():
     r.headers['Content-Type'] = 'application/json'
     return r
 
-def createDraft():
-    return 1
-
 def makeWebhookResult(req):
     result = req.get("result")
     parameters = result.get("parameters")
