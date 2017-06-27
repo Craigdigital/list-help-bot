@@ -30,7 +30,7 @@ def webhook():
 
 def creatDraft(parameters):
     categories = {'jeans': "11483", 'camera': "31388"}
-    condtions = {'new': "1000", "like new": "2750", 'used':"3000"}
+    condtions = {'new': "1000", 'used': "3000"}
 
     item = parameters.get("item")
     condtion = parameters.get("condtion")
@@ -43,10 +43,10 @@ def creatDraft(parameters):
     payload = {
         "requestListing": {
             "item": {
-                "title": condtion + brand + item + model
+                "title": item
             },
             "categoryId": categories[item],
-            "condition": condtions[condtion]
+            "condition": "1000"
         }
     }
 
