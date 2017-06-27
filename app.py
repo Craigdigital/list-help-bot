@@ -28,9 +28,8 @@ def webhook():
     r.headers['Content-Type'] = 'application/json'
     return r
 
-def creatDraft():
-
-    return -1
+def createDraft():
+    return 1
 
 def makeWebhookResult(req):
     result = req.get("result")
@@ -42,8 +41,8 @@ def makeWebhookResult(req):
     if req.get("result").get("action") == "item.cost":
         speech = "The recommended cost of " + item + " is "  + str(cost[item]) + " dollars."
     elif req.get("result").get("action") == "item.create":
-        draftid = creatDraft()
-        speech = 'Sure, I can help you sell your ' + item + ' on eBay.' + drafId + ' According to similar sold items, ' \
+        draftId = -1
+        speech = 'Sure, I can help you sell your ' + item + ' on eBay.' + draftId + ' According to similar sold items, ' \
                  'It will list with 7 day auction with starting price of $' + str(cost[item]) + '. Can I publish for you?'
     else:
         return {}
