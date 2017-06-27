@@ -28,11 +28,16 @@ def webhook():
     r.headers['Content-Type'] = 'application/json'
     return r
 
+def creatDraft():
+    
+
+    return 1
+
 def makeWebhookResult(req):
     result = req.get("result")
     parameters = result.get("parameters")
     item = parameters.get("item")
-    draftId = 1
+    draftId = creatDraft()
 
     cost = {'jeans':25, 'shoes':100, 'iphone':500, 'bags':250}
 
