@@ -30,8 +30,12 @@ def webhook():
 
 def creatDraft(parameters):
     categories = {'jeans': "11483", 'camera': "31388"}
+    condtions = {'new': "1000", "like new": "2750", 'used':"3000"}
 
     item = parameters.get("item")
+    condtion = parameters.get("condtion")
+    brand = parameters.get("brand")
+    model = parameters.get("model")
 
 
     url = "http://1f0cb7bf.ngrok.io/experience/consumer_selling/v1/listing_draft/create_and_open?mode=AddItem"
@@ -39,10 +43,10 @@ def creatDraft(parameters):
     payload = {
         "requestListing": {
             "item": {
-                "title": item
+                "title": condtion + brand + item + model
             },
             "categoryId": categories[item],
-            "condition": "1000"
+            "condition": condtions[condtion]
         }
     }
 
