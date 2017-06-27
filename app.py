@@ -38,8 +38,7 @@ def makeWebhookResult(req):
     if req.get("result").get("action") == "item.cost":
         speech = "The recommended cost of " + item + " is "  + str(cost[item]) + " dollars."
     elif req.get("result").get("action") == "item.create":
-        draftId = -1
-        speech = 'Sure, I can help you sell your ' + item + ' on eBay.' + draftId + ' According to similar sold items, ' \
+        speech = 'Sure, I can help you sell your ' + item + ' on eBay. According to similar sold items, ' \
                  'It will list with 7 day auction with starting price of $' + str(cost[item]) + '. Can I publish for you?'
     else:
         return {}
