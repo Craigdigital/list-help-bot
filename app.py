@@ -188,10 +188,10 @@ def makeWebhookResult(req):
                        "condition": condition,
                        "model": model,
                        "item":item}, f)
-        speech = 'Sure, I can help you sell your ' + item + ' on eBay with draftId as displayed. According to similar sold items, ' \
-                 'It will list with 7 day auction with starting price of $' + startPrice + '. Can I publish for you?'
-        text = 'Sure, I can help you sell your ' + item + ' on eBay with draftId ' + str(draftId) + '. According to similar sold items, ' \
-                 'It will list with 7 day auction with starting price of $' + startPrice + '. Can I publish for you?'
+        speech = 'Sweet. We recommend you to sell with 7-day auctions starting at $' + startPrice + 'according to similar items'\
+                 'Can I publish it for you?'
+        text = 'Sweet. We recommend you to sell with 7-day auctions starting at $' + startPrice + 'according to similar items'\
+                 'Can I publish it for you?'
     elif req.get("result").get("action") == "item.publish":
         paypal_account = parameters.get("paypal_account")
         with open('data.json') as f:
@@ -202,8 +202,8 @@ def makeWebhookResult(req):
         itemId = publishItemResponse['meta']['requestParameters']['itemId']
         with open('item_papyal.json', 'a') as f:
             json.dump({itemId:paypal_account}, f)
-        speech = 'Congratuations! Your item has been published successfully on eBay! The item id is displayed.'
-        text = 'Congratuations! Your item has been published successfully on eBay! The item id is ' + itemId +'.'
+        speech = 'Congratuations! Your item has been published successfully on eBay with item ID as displayed.'
+        text = 'Congratuations! Your item has been published successfully on eBay with item ID ' + itemId +'.'
     else:
         return {}
 
