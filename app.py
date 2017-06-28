@@ -144,14 +144,14 @@ def updateItem(draftId,data):
 
     return responseJS
 
-def publishItem(draftId):
+def publishItem(draftId, paypal_account):
 
     url = "http://1f0cb7bf.ngrok.io/experience/consumer_selling/v1/listing_draft/" + str(draftId) + "/publish?mode=AddItem"
 
     payload = {
         "requestListing": {
             "paymentInfo": {
-                "paypalEmailAddress": "ebaysellbot@gmail.com"
+                "paypalEmailAddress": paypal_account
             }
         }
     }
@@ -172,12 +172,13 @@ def publishItem(draftId):
 def makeWebhookResult(req):
     result = req.get("result")
     parameters = result.get("parameters")
-    item = parameters.get("item")
-    brand = parameters.get("brand")
-    condition = parameters.get("condtion")
-    model = parameters.get("model")
+
 
     if req.get("result").get("action") == "item.create":
+        item = parameters.get("item")
+        brand = parameters.get("brand")
+        condition = parameters.get("condtion")
+        model = parameters.get("model")
         responseJS = creatDraft(parameters)
         draftId = responseJS["modules"]['SELL_NODE_CTA']['paramList']['draftId']
         startPrice = responseJS["modules"]['PRICE']['bestChanceToSell']['price']['value']
@@ -192,12 +193,15 @@ def makeWebhookResult(req):
         text = 'Sure, I can help you sell your ' + item + ' on eBay with draftId ' + str(draftId) + '. According to similar sold items, ' \
                  'It will list with 7 day auction with starting price of $' + startPrice + '. Can I publish for you?'
     elif req.get("result").get("action") == "item.publish":
+        paypal_account = parameters.get("paypal_account")
         with open('data.json') as f:
             data = json.load(f)
         draftId = data["latestDraftId"]
         updateItemResponse = updateItem(draftId, data)
-        publishItemResponse = publishItem(draftId)
+        publishItemResponse = publishItem(draftId, paypal_account)
         itemId = publishItemResponse['meta']['requestParameters']['itemId']
+        with open('item_papyal.json', 'a') as f:
+            json.dump({itemId:paypal_account})
         speech = 'Congratuations! Your item has been published successfully on eBay! The item id is displayed.'
         text = 'Congratuations! Your item has been published successfully on eBay! The item id is ' + itemId +'.'
     else:
