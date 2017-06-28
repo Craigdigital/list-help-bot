@@ -8,6 +8,7 @@ from flask import Flask
 from flask import request
 from flask import make_response
 import requests
+import data
 
 # Flask app should start in global layout
 app = Flask(__name__)
@@ -51,7 +52,7 @@ def creatDraft(parameters):
     }
 
     headers = {
-        'Authorization': "Bearer v^1.1#i^1#f^0#p^3#I^3#r^0#t^H4sIAAAAAAAAAOVWXWgcVRTOJJtoTNMq/hJE16mRYDoz987M/g3Zpdv81C3Nj91NaYNV7s7c2YzZnRnn3kmy6MM2aEAFX3wptEIq+GCFKn2Q+lBBLSKoIBZ88MVSkLYIggjWKlXvzGaTTdREJGDBZWH33Pvdc77znXMvB9Q6Oh9dfGzxWjd3S+tSDdRaOQ52gc6O9v7tba097S2gCcAt1R6uRRbargwQVCm72gFMXMcmODpfKdtECxfTvO/ZmoOIRTQbVTDRqK7ls6P7NVkEmus51NGdMh/NDaV5tWjKiqokE6m4iRWgslW74bPgpHkYT5rAjCGziPWkqhpsnxAf52xCkU3TvAxgQgBQkJWCDDX2jaXERDI1xUcPYo9Yjs0gIuAzIV0tPOs1cd2YKiIEe5Q54TO57Eh+PJsbGh4rDEhNvjLLOuQpoj5Zaw06Bo4eRGUfbxyGhGgt7+s6JoSXMvUIa51q2QaZf0E/lDqBQEpJFBEAJoS6am6JlCOOV0F0Yx7BimUIZgjVsE0tWt1MUaZG8Wms02VrjLnIDUWDn8d9VLZMC3tpfnhP9vBkfvgAH81PTHjOrGVgI8gUKjAO1ISSVPhMyaSYUPiUT5aj1F0ta7wuzKBjG1agGImOOXQPZpTxemFgkzAMNG6Pe1kWwwtxyRCnFoCqgVVco6KrNdyqmqaMWBGxC6JgFelyDGxFTTOBrNmJCQkXUVUI7noFeTOYumWkY0Fn4vgV7FmGpqpFNY50U1DkpC6oRkwXUqkYFmQcx3EZKSow1f9BaeuVpNSzij7FwZ3FFdbk6zeiI56FbaNcDVimeaI7Luajzcb6E+HTsdwZ8yTNT1PqapI0Nzcnzimi45UkGQAoHRrdn9encQXxK1hrc7BghT2iMw4Mr9Gqy3jMsxZkwe0SnwnOE+YAuZYYNIKoOxXJQT6dlkK2Ep53cZCRjnf7rCcbHb6GfGb96iaiZF03ZzREqRs3lSjszYKyglx3S7IdwrOr2daN/zbbyAI3/ZcZG3h2SzIeZG9XI+Hw/01YXZ3x+qfJSn979//03ktr56VMS/iBC5wKFjjARi4ggV64EzzU0TYZadvWQyyKRQuZIrFKNhsDPCzO4KqLLK+1gxuVqnfeaJrQlo6A+1ZmtM422NU0sIH7V3fa4Y57u2ECsDRlKMNYagrsXN2NwHsid/3UXfqZK353KtLz++5je+fbL9HX+0H3Cojj2lsiR2vP7Xvglx9PDtzNG9JvL0VfOPFZ36G3CmfPb39eGL96tf/tiydu//7o+CulcyT38uHeM8fyX73/yBu/7nrtjq+f2PGt/eTHR2Ze7Hj2+DNnvxT7zn148b2P3hzatfDBO/uu3Lj87ie9D56e/ObVS/CHRaOrb+r6hVt7j5/2b5s5eb01eer8hWuXt535/NMv6ur9AWBk0bK6CgAA",
+        'Authorization': "Bearer v^1.1#i^1#r^1#f^0#I^3#p^3#t^Ul4xMF8yOjBEMUVDODQxMTZBMzQ2QkNFQjM4MUE1MkEyNDREOEIxXzFfMSNFXjUxNg==",
         'X-EBAY-C-ENDUSERCTX': "deviceId=4fe2d65bc464493aa9babd91aa259027,userAgent=Mozilla%2F5.0+%28iPad%3B+CPU+OS+7_0+like+Mac+OS+X%29+AppleWebKit%2F537.51.1+%28KHTML%2C+like+Gecko%29+Version%2F7.0+Mobile%2F11A465+Safari%2F9537.53",
         'X-EBAY-C-MARKETPLACE-ID': "EBAY-US",
         'Content-Type': "application/json",
@@ -66,23 +67,156 @@ def creatDraft(parameters):
     else:
         return response.status_code
 
+def updateItem():
+
+    draftId = data.latestDraftId
+
+    url = "http://1f0cb7bf.ngrok.io/experience/consumer_selling/v1/listing_draft/" + str(draftId) + "?mode=AddItem"
+
+    payload = {
+        "requestListing": {
+            "item": {
+                "itemSpecific": [
+                    {
+                        "name": "Brand",
+                        "value": [
+                            "cannon"
+                        ]
+                    },
+                    {
+                        "name": "Model",
+                        "value": [
+                            "t6i"
+                        ]
+                    },
+                    {
+                        "name": "Series",
+                        "value": [
+                            "58mm"
+                        ]
+                    }
+                ],
+                "title": "camera",
+                "picture": [
+                    {
+                      "url": "http://www.imaging-resource.com/PRODS/canon-t6i/Z-CANON-T6I-BEAUTY.JPG"
+                    },
+                    {
+                      "url": "https://static.bhphotovideo.com/explora/sites/default/files/T6i_0.jpg"
+                    },
+                    {
+                      "url": "http://bjselectronicsblog.com/wp-content/uploads/2016/02/Canon-Rebel-T6i-Best-Digital-SLR-Camera.jpg"
+                    },
+                    {
+                      "url": "http://www.imaging-resource.com/PRODS/canon-t6i/Z-CANON-T6I-FRONTLEFT.JPG"
+                    }
+                  ],
+                "description": "<div style=\"font-family: Arial; font-size:0.8125rem;\"><font face=\"Arial\" size=\"2\">add desc</font><br><br><br></div>"
+            },
+            "condition": "1000",
+            "price": 20,
+            "format": "Auction",
+            "listingInfo": {
+                "conditionDescription": "New with box",
+                "description": "<div style=\"font-family: Arial; font-size:0.8125rem;\"><font face=\"Arial\" size=\"2\">add desc</font><br><br><br></div>"
+            },
+            "categoryId": "31388",
+            "previousShippingType": "SHIP_RECO_0",
+            "serviceContextMeta": "{\"restrictedRevise\":false,\"sellerSegment\":\"NEW\",\"recommendedStartPrice\":0.99,\"recommendedBinPrice\":3.99,\"format\":\"FixedPrice\",\"price\":3.99,\"featureQualifiedList\":\"2033,2034\"}"
+        },
+        "updatedModules": [
+            "PHOTOS",
+            "ASPECTS_MODULE",
+            "CONDITION",
+            "DESCRIPTION",
+            "PRICE",
+            "LISTINGINFO"
+        ],
+        "userInteractedModules": "ASPECTS_MODULE,PHOTOS,DESCRIPTION,PRICE"
+    }
+
+    headers = {
+        'Authorization': "Bearer v^1.1#i^1#r^1#f^0#I^3#p^3#t^Ul4xMF8yOjBEMUVDODQxMTZBMzQ2QkNFQjM4MUE1MkEyNDREOEIxXzFfMSNFXjUxNg==",
+        'X-EBAY-C-ENDUSERCTX': "deviceId=4fe2d65bc464493aa9babd91aa259027,userAgent=Mozilla%2F5.0+%28iPad%3B+CPU+OS+7_0+like+Mac+OS+X%29+AppleWebKit%2F537.51.1+%28KHTML%2C+like+Gecko%29+Version%2F7.0+Mobile%2F11A465+Safari%2F9537.53",
+        'X-EBAY-C-MARKETPLACE-ID': "EBAY-US",
+        'Content-Type': "application/json"
+    }
+
+    response = requests.put(url, json=payload, headers=headers)
+    responseJS = json.loads(response.content)
+
+    return responseJS
+
+def publishItem():
+
+    draftId = data.latestDraftId
+
+    url = "http://1f0cb7bf.ngrok.io/experience/consumer_selling/v1/listing_draft/" + str(
+        draftId) + "/publish?mode=AddItem"
+
+    payload = {
+        "requestListing": {
+            "item": {
+                "title": "camera"
+            },
+            "paymentInfo": {
+                "paypalEmailAddress": "ebaysellbot@gmail.com"
+            },
+            "categoryId": "31388",
+            "condition": "1000",
+            "format": "Auction",
+            "itemLocation": {
+                "zipCode": "95134"
+            },
+            "priceBundle": "bestChanceToSell",
+            "startPrice": 17.96,
+            "previousShippingType": "SHIP_RECO_0"
+        },
+        "customInfo": {
+            "descriptionEditor": "standard",
+            "zipCode": "95134",
+            "priceBundle": "bestChanceToSell",
+            "startPrice": "17.96",
+            "previousShippingType": "SHIP_RECO_0"
+        }
+    }
+
+    headers = {
+        'Authorization': "Bearer v^1.1#i^1#r^1#f^0#I^3#p^3#t^Ul4xMF8yOjBEMUVDODQxMTZBMzQ2QkNFQjM4MUE1MkEyNDREOEIxXzFfMSNFXjUxNg==",
+        'X-EBAY-C-ENDUSERCTX': "deviceId=4fe2d65bc464493aa9babd91aa259027,userAgent=Mozilla%2F5.0+%28iPad%3B+CPU+OS+7_0+like+Mac+OS+X%29+AppleWebKit%2F537.51.1+%28KHTML%2C+like+Gecko%29+Version%2F7.0+Mobile%2F11A465+Safari%2F9537.53",
+        'X-EBAY-C-MARKETPLACE-ID': "EBAY-US",
+        'Content-Type': "application/json"
+    }
+
+    response = requests.post(url, json=payload, headers=headers)
+    responseJS = json.loads(response.content)
+
+    return responseJS
+
+
 def makeWebhookResult(req):
     result = req.get("result")
     parameters = result.get("parameters")
     item = parameters.get("item")
 
-    responseJS = creatDraft(parameters)
-    draftId = responseJS["modules"]['SELL_NODE_CTA']['paramList']['draftId']
-    startPrice = responseJS["modules"]['PRICE']['bestChanceToSell']['price']['value']
-
-
-    if req.get("result").get("action") == "item.cost":
-        speech = "The recommended cost of " + item + " is "  + startPrice + " dollars."
-    elif req.get("result").get("action") == "item.create":
+    if req.get("result").get("action") == "item.create":
+        responseJS = creatDraft(parameters)
+        draftId = responseJS["modules"]['SELL_NODE_CTA']['paramList']['draftId']
+        startPrice = responseJS["modules"]['PRICE']['bestChanceToSell']['price']['value']
+        data.latestDraftId = draftId
         speech = 'Sure, I can help you sell your ' + item + ' on eBay with draftId as displayed. According to similar sold items, ' \
                  'It will list with 7 day auction with starting price of $' + startPrice + '. Can I publish for you?'
         text = 'Sure, I can help you sell your ' + item + ' on eBay with draftId ' + str(draftId) + '. According to similar sold items, ' \
                  'It will list with 7 day auction with starting price of $' + startPrice + '. Can I publish for you?'
+    elif req.get("result").get("action") == "item.publish":
+        updateItemResponse = updateItem()
+        if updateItemResponse.status_code == 200:
+            publishItemResponse = publishItem()
+            if publishItemResponse.status_code == 200:
+                itemId = publishItemResponse['meta']['requestParameters']['itemId']
+                speech = 'Congratulatins! Your item has been published successfully and the item id is as displayed.'
+                text = 'Congratulatins! Your item has been published successfully and the item id is ' +itemId+ ' .'
+
     else:
         return {}
 
