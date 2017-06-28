@@ -146,8 +146,7 @@ def updateItem(draftId):
 
 def publishItem(draftId):
 
-    url = "http://1f0cb7bf.ngrok.io/experience/consumer_selling/v1/listing_draft/" + str(
-        draftId) + "/publish?mode=AddItem"
+    url = "http://1f0cb7bf.ngrok.io/experience/consumer_selling/v1/listing_draft/" + str(draftId) + "/publish?mode=AddItem"
 
     payload = {
         "requestListing": {
