@@ -208,13 +208,8 @@ def makeWebhookResult(req):
             data = json.load(f)
         draftId = data["latestDraftId"]
         updateItemResponse = updateItem(draftId)
-        if updateItemResponse.status_code == 200:
-            publishItemResponse = publishItem(draftId)
-            if publishItemResponse.status_code == 200:
-                itemId = publishItemResponse['meta']['requestParameters']['itemId']
-                speech = 'Congratulatins! Your item has been published successfully and the item id is as displayed.'
-                text = 'Congratulatins! Your item has been published successfully and the item id is ' +itemId+ ' .'
-
+        speech = 'status code' + updateItemResponse.status_code
+        text = speech
     else:
         return {}
 
