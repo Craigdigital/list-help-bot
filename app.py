@@ -8,7 +8,6 @@ from flask import Flask
 from flask import request
 from flask import make_response
 import requests
-import data
 
 # Flask app should start in global layout
 app = Flask(__name__)
@@ -67,9 +66,7 @@ def creatDraft(parameters):
     else:
         return response.status_code
 
-def updateItem():
-
-    draftId = data.latestDraftId
+def updateItem(draftId):
 
     url = "http://1f0cb7bf.ngrok.io/experience/consumer_selling/v1/listing_draft/" + str(draftId) + "?mode=AddItem"
 
@@ -147,9 +144,7 @@ def updateItem():
 
     return responseJS
 
-def publishItem():
-
-    draftId = data.latestDraftId
+def publishItem(draftId):
 
     url = "http://1f0cb7bf.ngrok.io/experience/consumer_selling/v1/listing_draft/" + str(
         draftId) + "/publish?mode=AddItem"
@@ -203,15 +198,19 @@ def makeWebhookResult(req):
         responseJS = creatDraft(parameters)
         draftId = responseJS["modules"]['SELL_NODE_CTA']['paramList']['draftId']
         startPrice = responseJS["modules"]['PRICE']['bestChanceToSell']['price']['value']
-        data.latestDraftId = draftId
+        with open('data.json', 'w') as f:
+            json.dump({"latestDraftId": draftId}, f)
         speech = 'Sure, I can help you sell your ' + item + ' on eBay with draftId as displayed. According to similar sold items, ' \
                  'It will list with 7 day auction with starting price of $' + startPrice + '. Can I publish for you?'
         text = 'Sure, I can help you sell your ' + item + ' on eBay with draftId ' + str(draftId) + '. According to similar sold items, ' \
                  'It will list with 7 day auction with starting price of $' + startPrice + '. Can I publish for you?'
     elif req.get("result").get("action") == "item.publish":
-        updateItemResponse = updateItem()
+        with open('data.json') as f:
+            data = json.load(f)
+        draftId = data["latestDraftId"]
+        updateItemResponse = updateItem(draftId)
         if updateItemResponse.status_code == 200:
-            publishItemResponse = publishItem()
+            publishItemResponse = publishItem(draftId)
             if publishItemResponse.status_code == 200:
                 itemId = publishItemResponse['meta']['requestParameters']['itemId']
                 speech = 'Congratulatins! Your item has been published successfully and the item id is as displayed.'
