@@ -208,7 +208,7 @@ def makeWebhookResult(req):
             data = json.load(f)
         draftId = data["latestDraftId"]
         updateItemResponse = updateItem(draftId)
-        speech = 'status code' + updateItemResponse["modules"]['SELL_NODE_CTA']['paramList']['draftId']
+        speech = 'create draft id' + draftId + 'update status code' + updateItemResponse['meta']['requestParameters']['draftId']
         text = speech
     else:
         return {}
