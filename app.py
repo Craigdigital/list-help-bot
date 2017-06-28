@@ -66,7 +66,8 @@ def creatDraft(parameters):
     else:
         return response.status_code
 
-def updateItem(draftId,data):
+def updateItem(draftId,data,startPrice):
+
 
     url = "http://1f0cb7bf.ngrok.io/experience/consumer_selling/v1/listing_draft/" + str(draftId) + "?mode=AddItem"
 
@@ -112,6 +113,7 @@ def updateItem(draftId,data):
             },
             "condition": "1000",
             "price": 20,
+            "startPrice": startPrice,
             "format": "Auction",
             "listingInfo": {
                 "conditionDescription": "New with box",
@@ -187,18 +189,32 @@ def makeWebhookResult(req):
                        "brand": brand,
                        "condition": condition,
                        "model": model,
-                       "item":item}, f)
-        speech = 'Sweet. We recommend you to sell with 7-day auctions starting at $' + startPrice + ' according to similar items'\
-                 'Can I publish it for you?'
-        text = 'Sweet. We recommend you to sell with 7-day auctions starting at $' + startPrice + 'according to similar items'\
-                 'Can I publish it for you?'
+                       "item":item,
+                       "startPrice":startPrice}, f)
+        speech = 'Sweet. We recommend you to sell with 7-day auctions starting at $' + startPrice + ' according to similar items.'\
+                 'Want to go with that?'
+        text = 'Sweet. We recommend you to sell with 7-day auctions starting at $' + startPrice + ' according to similar items.'\
+                 'Want to go with that??'
         data = {}
+    elif req.get("result").get("action") == "item.update":
+        with open('data.json') as f:
+            data = json.load(f)
+        draftId = data["latestDraftId"]
+        customPrice = parameters.get("unit-currency").get("amount")
+        with open('data.json', 'w') as f:
+            json.dump({"startPrice":customPrice}, f)
+        updateItemResponse = updateItem(draftId, data, customPrice)
+        speech = "Ok! \n We have changed your starting price to " + str(customPrice) + "Are you ready to list? "
+        text = "Ok! \n We have changed your starting price to " + str(customPrice) + "Are you ready to list? "
+        data = {}
+
     elif req.get("result").get("action") == "item.publish":
         paypal_account = parameters.get("paypal_account")
         with open('data.json') as f:
             data = json.load(f)
         draftId = data["latestDraftId"]
-        updateItemResponse = updateItem(draftId, data)
+        customPrice = data["startPrice"]
+        updateItemResponse = updateItem(draftId, data, customPrice)
         publishItemResponse = publishItem(draftId, paypal_account)
         itemId = publishItemResponse['meta']['requestParameters']['itemId']
         with open('item_papyal.json', 'a') as f:
@@ -206,29 +222,29 @@ def makeWebhookResult(req):
         speech = 'Congratuations! Your item has been published successfully on eBay with item ID as displayed.'
         text = 'Congratuations! Your item has been published successfully on eBay with item ID ' + itemId +'.'
         data = {
-  "google": {
-  "expect_user_response": False,
-  "rich_response": {
-  "items": [
-    {
-      "simpleResponse": {
+        "google": {
+        "expect_user_response": False,
+        "rich_response": {
+        "items": [
+        {
+        "simpleResponse": {
           "textToSpeech":"Congratuations! Your item has been published successfully on eBay touch to view."
-      }
-    },
-    {
-      "basicCard": {
-        "title":"camera",
-        "image": {
-          "url":"http://www.imaging-resource.com/PRODS/canon-t6i/Z-CANON-T6I-BEAUTY.JPG",
-          "accessibilityText":"Image alternate text"
+        }
         },
-        "buttons": [
-          {
-            "title":"View my item",
-            "openUrlAction":{
-              "url":"http://www.qa.ebay.com/itm/300008008199?ssPageName=STRK:MESELX:IT&_trksid=p3984.m1555.l2649"
+        {
+        "basicCard": {
+            "title":str(data["condition"]) + " " + str(data["brand"]) + " " + str(data["model"]) + " " + str(data["item"]),
+            "image": {
+            "url":"http://www.imaging-resource.com/PRODS/canon-t6i/Z-CANON-T6I-BEAUTY.JPG",
+            "accessibilityText":"Image alternate text"
+            },
+            "buttons": [
+            {
+                "title":"View my item",
+                "openUrlAction":{
+                "url":"http://www.qa.ebay.com/itm/" + str(itemId) + "?ssPageName=STRK:MESELX:IT&_trksid=p3984.m1555.l2649"
+                }
             }
-          }
         ]
       }
     }
