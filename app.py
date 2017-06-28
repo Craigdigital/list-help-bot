@@ -150,28 +150,9 @@ def publishItem(draftId):
 
     payload = {
         "requestListing": {
-            "item": {
-                "title": "camera"
-            },
             "paymentInfo": {
                 "paypalEmailAddress": "ebaysellbot@gmail.com"
-            },
-            "categoryId": "31388",
-            "condition": "1000",
-            "format": "Auction",
-            "itemLocation": {
-                "zipCode": "95134"
-            },
-            "priceBundle": "bestChanceToSell",
-            "startPrice": 17.96,
-            "previousShippingType": "SHIP_RECO_0"
-        },
-        "customInfo": {
-            "descriptionEditor": "standard",
-            "zipCode": "95134",
-            "priceBundle": "bestChanceToSell",
-            "startPrice": "17.96",
-            "previousShippingType": "SHIP_RECO_0"
+            }
         }
     }
 
@@ -208,7 +189,9 @@ def makeWebhookResult(req):
             data = json.load(f)
         draftId = data["latestDraftId"]
         updateItemResponse = updateItem(draftId)
-        speech = 'create draft id' + draftId + 'update status code' + updateItemResponse['meta']['requestParameters']['draftId']
+        publishItemResponse = publishItem(draftId)
+        itemId = publishItemResponse['meta']['requestParameters']['itemId']
+        speech = 'item id is' + itemId
         text = speech
     else:
         return {}
