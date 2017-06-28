@@ -83,7 +83,7 @@ def updateItem(draftId,data):
                     {
                         "name": "Model",
                         "value": [
-                            data["Model"]
+                            data["model"]
                         ]
                     },
                     {
