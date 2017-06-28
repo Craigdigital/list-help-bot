@@ -192,6 +192,7 @@ def makeWebhookResult(req):
                  'Can I publish it for you?'
         text = 'Sweet. We recommend you to sell with 7-day auctions starting at $' + startPrice + 'according to similar items'\
                  'Can I publish it for you?'
+        data = {}
     elif req.get("result").get("action") == "item.publish":
         paypal_account = parameters.get("paypal_account")
         with open('data.json') as f:
@@ -204,6 +205,37 @@ def makeWebhookResult(req):
             json.dump({itemId:paypal_account}, f)
         speech = 'Congratuations! Your item has been published successfully on eBay with item ID as displayed.'
         text = 'Congratuations! Your item has been published successfully on eBay with item ID ' + itemId +'.'
+        data = {
+  "google": {
+  "expect_user_response": False,
+  "rich_response": {
+  "items": [
+    {
+      "simpleResponse": {
+          "textToSpeech":"Congratuations! Your item has been published successfully on eBay touch to view."
+      }
+    },
+    {
+      "basicCard": {
+        "title":"camera",
+        "image": {
+          "url":"http://www.imaging-resource.com/PRODS/canon-t6i/Z-CANON-T6I-BEAUTY.JPG",
+          "accessibilityText":"Image alternate text"
+        },
+        "buttons": [
+          {
+            "title":"View my item",
+            "openUrlAction":{
+              "url":"http://www.qa.ebay.com/itm/300008008199?ssPageName=STRK:MESELX:IT&_trksid=p3984.m1555.l2649"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
+}
+}
     else:
         return {}
 
@@ -214,54 +246,7 @@ def makeWebhookResult(req):
     return {
         "speech": speech,
         "displayText": text,
-        "data": {
-  "google": {
-  "expect_user_response": True,
-  "rich_response": {
-  "items": [
-    {
-      "simpleResponse": {
-          "textToSpeech":"This is the first simple response for a basic card"
-      }
-    },
-    {
-      "basicCard": {
-        "title":"Title: this is a title",
-        "formattedText":"This is a basic card.  Text in a\n      basic card can include \"quotes\" and most other unicode characters\n      including emoji.  Basic cards also support some markdown\n      formatting like *emphasis* or _italics_, **strong** or __bold__,\n      and ***bold itallic*** or ___strong emphasis___ as well as other things\n      like line  \nbreaks",
-        "subtitle":
-        "This is a subtitle",
-        "image": {
-          "url":"https://developers.google.com/actions/images/badges/XPM_BADGING_GoogleAssistant_VER.png",
-          "accessibilityText":"Image alternate text"
-        },
-        "buttons": [
-          {
-            "title":"This is a button",
-            "openUrlAction":{
-              "url":"https://assistant.google.com/"
-            }
-          }
-        ]
-      }
-    },
-    {
-      "simpleResponse": {
-        "textToSpeech":"This is the 2nd simple response ",
-        "displayText":"This is the 2nd simple response"
-      }
-    }
-  ],
-  "suggestions":
-  [
-    {"title":"Basic Card"},
-    {"title":"List"},
-    {"title":"Carousel"},
-    {"title":"Suggestions"}
-  ]
-}
-  }
-        }
-        ,
+        "data": data,
         # "contextOut": [],
         "source": "apiai-onlinestore-shipping"
     }
