@@ -188,7 +188,7 @@ def makeWebhookResult(req):
                        "condition": condition,
                        "model": model,
                        "item":item}, f)
-        speech = 'Sweet. We recommend you to sell with 7-day auctions starting at $' + startPrice + 'according to similar items'\
+        speech = 'Sweet. We recommend you to sell with 7-day auctions starting at $' + startPrice + ' according to similar items'\
                  'Can I publish it for you?'
         text = 'Sweet. We recommend you to sell with 7-day auctions starting at $' + startPrice + 'according to similar items'\
                  'Can I publish it for you?'
