@@ -184,7 +184,7 @@ def makeWebhookResult(req):
         responseJS = creatDraft(parameters)
         draftId = responseJS["modules"]['SELL_NODE_CTA']['paramList']['draftId']
         startPrice = responseJS["modules"]['PRICE']['bestChanceToSell']['price']['value']
-        with open('data.json', 'w') as f:
+        with open('tempData.json', 'w') as f:
             json.dump({"latestDraftId": draftId,
                        "brand": brand,
                        "condition": condition,
@@ -195,22 +195,22 @@ def makeWebhookResult(req):
                  'Want to go with that?'
         text = 'Sweet. We recommend you to sell with 7-day auctions starting at $' + startPrice + ' according to similar items.'\
                  'Want to go with that??'
-        data = {}
+        responseData = {}
     elif req.get("result").get("action") == "item.update":
-        with open('data.json') as f:
+        with open('tempData.json') as f:
             data = json.load(f)
         draftId = data["latestDraftId"]
         customPrice = parameters.get("unit-currency").get("amount")
-        with open('data.json', 'w') as f:
+        with open('tempData.json', 'w') as f:
             json.dump({"startPrice":customPrice}, f)
         updateItemResponse = updateItem(draftId, data, customPrice)
         speech = "Ok! \n We have changed your starting price to " + str(customPrice) + "Are you ready to list? "
         text = "Ok! \n We have changed your starting price to " + str(customPrice) + "Are you ready to list? "
-        data = {}
+        responseData = {}
 
     elif req.get("result").get("action") == "item.publish":
         paypal_account = parameters.get("paypal_account")
-        with open('data.json') as f:
+        with open('tempData.json') as f:
             data = json.load(f)
         draftId = data["latestDraftId"]
         customPrice = data["startPrice"]
@@ -221,7 +221,7 @@ def makeWebhookResult(req):
             json.dump({itemId:paypal_account}, f)
         speech = 'Congratuations! Your item has been published successfully on eBay with item ID as displayed.'
         text = 'Congratuations! Your item has been published successfully on eBay with item ID ' + itemId +'.'
-        data = {
+        responseData = {
         "google": {
         "expect_user_response": False,
         "rich_response": {
@@ -262,7 +262,7 @@ def makeWebhookResult(req):
     return {
         "speech": speech,
         "displayText": text,
-        "data": data,
+        "data": responseData,
         # "contextOut": [],
         "source": "apiai-onlinestore-shipping"
     }
