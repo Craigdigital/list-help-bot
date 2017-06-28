@@ -201,7 +201,7 @@ def makeWebhookResult(req):
         publishItemResponse = publishItem(draftId, paypal_account)
         itemId = publishItemResponse['meta']['requestParameters']['itemId']
         with open('item_papyal.json', 'a') as f:
-            json.dump({itemId:paypal_account})
+            json.dump({itemId:paypal_account}, f)
         speech = 'Congratuations! Your item has been published successfully on eBay! The item id is displayed.'
         text = 'Congratuations! Your item has been published successfully on eBay! The item id is ' + itemId +'.'
     else:
