@@ -192,7 +192,7 @@ def makeWebhookResult(req):
         publishItemResponse = publishItem(draftId)
         itemId = publishItemResponse['meta']['requestParameters']['itemId']
         speech = 'Congratuations! Your item has been published successfully on eBay! The item id is displayed.'
-        text = 'Congratuations! Your item has been published successfully on eBay! The item id is displayed.' + itemId
+        text = 'Congratuations! Your item has been published successfully on eBay! The item id is ' + itemId +'.'
     else:
         return {}
 
