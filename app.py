@@ -174,7 +174,7 @@ def makeWebhookResult(req):
     parameters = result.get("parameters")
     item = parameters.get("item")
     brand = parameters.get("brand")
-    condition = parameters.get("condition")
+    condition = parameters.get("condtion")
     model = parameters.get("model")
 
     if req.get("result").get("action") == "item.create":
