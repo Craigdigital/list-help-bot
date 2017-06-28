@@ -43,7 +43,7 @@ def creatDraft(parameters):
     payload = {
         "requestListing": {
             "item": {
-                "title": item
+                "title": str(condtion) + str(brand) + str(item) + str(model)
             },
             "categoryId": categories[item],
             "condition": "1000"
