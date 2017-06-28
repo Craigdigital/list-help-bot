@@ -66,7 +66,7 @@ def creatDraft(parameters):
     else:
         return response.status_code
 
-def updateItem(draftId):
+def updateItem(draftId,data):
 
     url = "http://1f0cb7bf.ngrok.io/experience/consumer_selling/v1/listing_draft/" + str(draftId) + "?mode=AddItem"
 
@@ -77,13 +77,13 @@ def updateItem(draftId):
                     {
                         "name": "Brand",
                         "value": [
-                            "cannon"
+                            data["brand"]
                         ]
                     },
                     {
                         "name": "Model",
                         "value": [
-                            "5D"
+                            data["Model"]
                         ]
                     },
                     {
@@ -93,7 +93,7 @@ def updateItem(draftId):
                         ]
                     }
                 ],
-                "title": "camera",
+                "title": data["condition"] + " " + data["brand"] + " " + data["model"] + " " + data["item"],
                 "picture": [
                     {
                       "url": "http://www.imaging-resource.com/PRODS/canon-t6i/Z-CANON-T6I-BEAUTY.JPG"
@@ -173,13 +173,16 @@ def makeWebhookResult(req):
     result = req.get("result")
     parameters = result.get("parameters")
     item = parameters.get("item")
+    brand = parameters.get("brand")
+    condition = parameters.get("condition")
+    model = parameters.get("model")
 
     if req.get("result").get("action") == "item.create":
         responseJS = creatDraft(parameters)
         draftId = responseJS["modules"]['SELL_NODE_CTA']['paramList']['draftId']
         startPrice = responseJS["modules"]['PRICE']['bestChanceToSell']['price']['value']
         with open('data.json', 'w') as f:
-            json.dump({"latestDraftId": draftId}, f)
+            json.dump({"latestDraftId": draftId, "brand": brand, "condition": condition, "model": model, "item":item}, f)
         speech = 'Sure, I can help you sell your ' + item + ' on eBay with draftId as displayed. According to similar sold items, ' \
                  'It will list with 7 day auction with starting price of $' + startPrice + '. Can I publish for you?'
         text = 'Sure, I can help you sell your ' + item + ' on eBay with draftId ' + str(draftId) + '. According to similar sold items, ' \
@@ -188,7 +191,7 @@ def makeWebhookResult(req):
         with open('data.json') as f:
             data = json.load(f)
         draftId = data["latestDraftId"]
-        updateItemResponse = updateItem(draftId)
+        updateItemResponse = updateItem(draftId, data)
         publishItemResponse = publishItem(draftId)
         itemId = publishItemResponse['meta']['requestParameters']['itemId']
         speech = 'Congratuations! Your item has been published successfully on eBay! The item id is displayed.'
