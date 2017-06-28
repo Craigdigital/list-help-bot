@@ -93,7 +93,7 @@ def updateItem(draftId,data):
                         ]
                     }
                 ],
-                "title": data["condition"] + " " + data["brand"] + " " + data["model"] + " " + data["item"],
+                "title": str(data["condition"]) + " " + str(data["brand"]) + " " + str(data["model"]) + " " + str(data["item"]),
                 "picture": [
                     {
                       "url": "http://www.imaging-resource.com/PRODS/canon-t6i/Z-CANON-T6I-BEAUTY.JPG"
@@ -182,7 +182,11 @@ def makeWebhookResult(req):
         draftId = responseJS["modules"]['SELL_NODE_CTA']['paramList']['draftId']
         startPrice = responseJS["modules"]['PRICE']['bestChanceToSell']['price']['value']
         with open('data.json', 'w') as f:
-            json.dump({"latestDraftId": draftId, "brand": brand, "condition": condition, "model": model, "item":item}, f)
+            json.dump({"latestDraftId": draftId,
+                       "brand": brand,
+                       "condition": condition,
+                       "model": model,
+                       "item":item}, f)
         speech = 'Sure, I can help you sell your ' + item + ' on eBay with draftId as displayed. According to similar sold items, ' \
                  'It will list with 7 day auction with starting price of $' + startPrice + '. Can I publish for you?'
         text = 'Sure, I can help you sell your ' + item + ' on eBay with draftId ' + str(draftId) + '. According to similar sold items, ' \
