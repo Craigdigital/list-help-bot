@@ -237,7 +237,7 @@ def makeWebhookResult(req):
         "items": [
         {
         "simpleResponse": {
-          "textToSpeech":"Congratuations! Your item has been published successfully on eBay touch to view."
+          "textToSpeech":"Congratuations! Your item has been published successfully on eBay. Touch to view."
         }
         },
         {
