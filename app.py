@@ -213,8 +213,8 @@ def makeWebhookResult(req):
 
 
         updateItemResponse = updateItem(draftId, data, customPrice)
-        speech = "Ok! \n We have changed your starting price to " + str(customPrice) + " Are you ready to list? "
-        text = "Ok! \n We have changed your starting price to " + str(customPrice) + " Are you ready to list? "
+        speech = "Ok! \n We have changed your starting price to $" + str(customPrice) + " Are you ready to list? "
+        text = "Ok! \n We have changed your starting price to $" + str(customPrice) + " Are you ready to list? "
         responseData = {}
 
     elif req.get("result").get("action") == "item.publish":
