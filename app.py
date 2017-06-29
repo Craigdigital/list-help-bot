@@ -201,11 +201,20 @@ def makeWebhookResult(req):
             data = json.load(f)
         draftId = data["latestDraftId"]
         customPrice = parameters.get("unit-currency").get("amount")
-        with open('tempData.json', 'w') as f:
-            json.dump({"startPrice":customPrice}, f)
+
+        #update the start price
+        with open("tempData.json", "r") as f:
+            data = json.load(f)
+
+        data["startPrice"] = customPrice
+
+        with open("tempData.json", "w") as f:
+            json.dump(data, f)
+
+
         updateItemResponse = updateItem(draftId, data, customPrice)
-        speech = "Ok! \n We have changed your starting price to " + str(customPrice) + "Are you ready to list? "
-        text = "Ok! \n We have changed your starting price to " + str(customPrice) + "Are you ready to list? "
+        speech = "Ok! \n We have changed your starting price to " + str(customPrice) + " Are you ready to list? "
+        text = "Ok! \n We have changed your starting price to " + str(customPrice) + " Are you ready to list? "
         responseData = {}
 
     elif req.get("result").get("action") == "item.publish":
