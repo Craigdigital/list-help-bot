@@ -263,7 +263,7 @@ def makeWebhookResult(req):
 }
 }
     elif req.get("result").get("action") == "item.revise":
-
+        pass
     else:
         return {}
 
