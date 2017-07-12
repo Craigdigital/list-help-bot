@@ -214,8 +214,8 @@ def makeWebhookResult(req):
 
 
         updateItemResponse = updateItem(draftId, data, customPrice)
-        speech = "Ok! \n We have changed your starting price to $" + str(customPrice) + " Are you ready to list? "
-        text = "Ok! \n We have changed your starting price to $" + str(customPrice) + " Are you ready to list? "
+        speech = "Ok! \n We have changed your starting price to $" + str(customPrice) + " . Are you ready to list? "
+        text = "Ok! \n We have changed your starting price to $" + str(customPrice) + " . Are you ready to list? "
         responseData = {}
 
     elif req.get("result").get("action") == "item.publish":
@@ -244,7 +244,7 @@ def makeWebhookResult(req):
         {
         "basicCard": {
             "title":str(data["condition"]) + " " + str(data["brand"]) + " " + str(data["model"]) + " " + str(data["item"]),
-            "subtitle": "7-day auction start with $" + customPrice,
+            "subtitle": "7-day auction start with $" + str(customPrice),
             "image": {
             "url":"http://www.imaging-resource.com/PRODS/canon-t6i/Z-CANON-T6I-BEAUTY.JPG",
             "accessibilityText":"Image alternate text"
