@@ -182,7 +182,8 @@ def makeWebhookResult(req):
         condition = parameters.get("condtion")
         model = parameters.get("model")
         responseJS = creatDraft(parameters)
-        draftId = responseJS["modules"]['SELL_NODE_CTA']['paramList']['draftId']
+        #draftId = responseJS["modules"]['SELL_NODE_CTA']['paramList']['draftId']
+        draftId = responseJS["meta"]['requestParameters']['draftId']
         startPrice = responseJS["modules"]['PRICE']['bestChanceToSell']['price']['value']
         with open('tempData.json', 'w') as f:
             json.dump({"latestDraftId": draftId,
@@ -261,6 +262,8 @@ def makeWebhookResult(req):
 }
 }
 }
+    elif req.get("result").get("action") == "item.revise":
+
     else:
         return {}
 
