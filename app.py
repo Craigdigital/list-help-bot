@@ -38,7 +38,7 @@ def creatDraft(parameters):
     model = parameters.get("model")
 
 
-    url = "http://084cdccd.ngrok.io/experience/consumer_selling/v1/listing_draft/create_and_open?mode=AddItem"
+    url = "http://aac9ae49.ngrok.io/experience/consumer_selling/v1/listing_draft/create_and_open?mode=AddItem"
 
     payload = {
         "requestListing": {
@@ -69,7 +69,7 @@ def creatDraft(parameters):
 def updateItem(draftId,data,startPrice):
 
 
-    url = "http://084cdccd.ngrok.io/experience/consumer_selling/v1/listing_draft/" + str(draftId) + "?mode=AddItem"
+    url = "http://aac9ae49.ngrok.io/experience/consumer_selling/v1/listing_draft/" + str(draftId) + "?mode=AddItem"
 
     payload = {
         "requestListing": {
@@ -148,7 +148,7 @@ def updateItem(draftId,data,startPrice):
 
 def publishItem(draftId, paypal_account):
 
-    url = "http://084cdccd.ngrok.io/experience/consumer_selling/v1/listing_draft/" + str(draftId) + "/publish?mode=AddItem"
+    url = "http://aac9ae49.ngrok.io/experience/consumer_selling/v1/listing_draft/" + str(draftId) + "/publish?mode=AddItem"
 
     payload = {
         "requestListing": {
