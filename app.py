@@ -246,7 +246,7 @@ def makeWebhookResult(req):
             "title":str(data["condition"]) + " " + str(data["brand"]) + " " + str(data["model"]) + " " + str(data["item"]),
             "subtitle": "7-day auction start with $" + str(customPrice),
             "image": {
-            "url":"http://www.imaging-resource.com/PRODS/canon-t6i/Z-CANON-T6I-BEAUTY.JPG",
+            "url":"https://www.dpreview.com/files/p/articles/2952771527/Images/frontview.jpeg",
             "accessibilityText":"Image alternate text"
             },
             "buttons": [
