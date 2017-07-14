@@ -201,7 +201,7 @@ def makeWebhookResult(req):
         with open('tempData.json') as f:
             data = json.load(f)
         draftId = data["latestDraftId"]
-        customPrice = parameters.get("unit-currency").get("amount")
+        customPrice = parameters.get("number")
 
         #update the start price
         with open("tempData.json", "r") as f:
