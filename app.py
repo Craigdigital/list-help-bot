@@ -100,13 +100,13 @@ def updateItem(draftId,data,startPrice):
                       "url": "https://www.dpreview.com/files/p/articles/2952771527/Images/frontview.jpeg"
                     },
                     {
-                      "url": "https://static.bhphotovideo.com/explora/sites/default/files/T6i_0.jpg"
+                      "url": "https://www.dpreview.com/files/p/articles/2952771527/Images/frontview.jpeg"
                     },
                     {
-                      "url": "http://bjselectronicsblog.com/wp-content/uploads/2016/02/Canon-Rebel-T6i-Best-Digital-SLR-Camera.jpg"
+                      "url": "https://www.dpreview.com/files/p/articles/2952771527/Images/frontview.jpeg"
                     },
                     {
-                      "url": "http://www.imaging-resource.com/PRODS/canon-t6i/Z-CANON-T6I-FRONTLEFT.JPG"
+                      "url": "https://www.dpreview.com/files/p/articles/2952771527/Images/frontview.jpeg"
                     }
                   ],
                 "description": "<div style=\"font-family: Arial; font-size:0.8125rem;\"><font face=\"Arial\" size=\"2\">add desc</font><br><br><br></div>"
