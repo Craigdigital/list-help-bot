@@ -97,7 +97,7 @@ def updateItem(draftId,data,startPrice):
                 "title": str(data["condition"]) + " " + str(data["brand"]) + " " + str(data["model"]) + " " + str(data["item"]),
                 "picture": [
                     {
-                      "url": "http://www.imaging-resource.com/PRODS/canon-t6i/Z-CANON-T6I-BEAUTY.JPG"
+                      "url": "https://www.dpreview.com/files/p/articles/2952771527/Images/frontview.jpeg"
                     },
                     {
                       "url": "https://static.bhphotovideo.com/explora/sites/default/files/T6i_0.jpg"
